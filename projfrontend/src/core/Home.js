@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
-
 import {getProducts} from "./helper/coreapicalls";
+import Base from "./Base";
+
+import "../styles.css";
+import Card from "./Card";
 
 export default function Home() {
 
@@ -38,21 +41,26 @@ export default function Home() {
     } , [])
 
     return (
-        <div>
+
+        //Base is the children defined in the file "Base" and title="..." are the properties
+        //title is accessing the "title" propreties defined in the file Base.js in the row 4 and now changing the initial value of "my title" by "Home"
+        <Base title="Home" description="Welcome to the Amazon of Healtcare products and services">
             <h1>Home component</h1>
             <div className="row">
 
                 {/*the "products.map" display the products and "index" does not allow to display more than once*/}
                 {products.map((project, index) => {
                     return(
-                        <div key={index}>
+                        <div key={index} className="col-4 mb-4">
+
+                        <Card project={project}/>
 
                             {/* the "project" is the name of the file http://127.0.0.1:8000/api/project/ and "description" is the name of one column created in the database within models in python*/}
-                            <h1>{project.description}</h1>
+                            {/*<h1>{project.description}</h1>*/}
                         </div>
                     )
                 })}
             </div>
-        </div>
+        </Base>
     )
 }
