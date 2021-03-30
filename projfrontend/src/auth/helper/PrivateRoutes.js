@@ -1,17 +1,17 @@
 //the private routes are meant to restrict the views to some of the users
-import React, { Component } from 'react';
-import { Redirect, Route } from 'react-router';
+import React from 'react';
+import { Route, Redirect } from 'react-router';
 import { isAuthenticated } from "./index"
 
 //this is from documentation row137  https://reactrouter.com/web/example/auth-workflow
-const PrivateRoutes = ({children, ...rest}) => {
+const PrivateRoutes = ({component: Component, ...rest}) => {
     return (
         <Route
             {...rest}
             render={(props) =>
         
             //fakeAuth.isAuthenticated
-            isAuthenticated     
+            isAuthenticated()     
                 
                 ? ( 
                     //children
@@ -26,8 +26,8 @@ const PrivateRoutes = ({children, ...rest}) => {
                 )
             }
         />    
-    )
-}
+    );
+};
 export default PrivateRoutes;
 
 

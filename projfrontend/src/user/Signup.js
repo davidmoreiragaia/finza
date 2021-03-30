@@ -40,7 +40,7 @@ const Signup = () => {
                     error: "",
                     success: true
                 })
-                
+
             } else {
                 setValues({
                     ...values,
@@ -50,6 +50,42 @@ const Signup = () => {
             }
         })
         .catch((e) => console.log(e))
+    }
+
+    const successMessage = () => {
+        return(
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div 
+                    className="alert alert-success"
+
+                    //we will displaay the message below based on the ternary expression to display the message
+                    style={{ display: success ? "" : "none" }}
+                    >
+                        New account created successfully. Please
+                        <Link to="/signin"> login now.</Link> 
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+
+    const errorMessage = () => {
+        return(
+            <div className="row">
+                <div className="col-md-6 offset-sm-3 text-left">
+                    <div 
+                    className="alert alert-danger"
+
+                    //we will displaay the message below based on the ternary expression to display the message
+                    style={{ display: error ? "" : "none" }}
+                    >
+                        Check all fields again.
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     const signUpForm = () => {
@@ -96,6 +132,8 @@ const Signup = () => {
 
     return (
         <Base title="Sign Up Page" description="A signup for Finnabee user">
+            {successMessage()}
+            {errorMessage()}
             {signUpForm()}
             
             <p className="text-white text-center">

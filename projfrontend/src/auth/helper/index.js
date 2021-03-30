@@ -34,20 +34,34 @@ export const signin = (borrowuser) => {
 
     //the "name" is a field in the database model stored in borrowuser
     for(const name in borrowuser) {
-        formData.append(name, borrowuser[name])
+        console.log(borrowuser[name]);
+        formData.append(name, borrowuser[name]);
     }
+   
+    // the destructured code below is equal to the code above
+    // const { email, password } = borrowuser;
+    // const formData = new formData();
+    // formData.append('email', email)
+    // formData.append('password', password)
+
+    //The FormData.keys() method returns an iterator allowing to go through all keys contained in this object. 
+    for(var key of formData.keys()){
+        //this will print all keys from the objects above (key-value)
+        console.log("MYKEY: ", key)
+    }
+
 
     //this is the router API that we need to hit
     return fetch(`${API}borrowuser/login/`, {
         method: "POST",
-        body: FormData
-
+        body: formData,
     })
     .then((response) => {
+        console.log("SUCCESS", response);
         return response.json();
     })
     .catch((err) => console.log(err));
-}
+};
 
 
 //here we create the authentication
@@ -65,21 +79,21 @@ export const authenticate = (data, next) => {
 //jango REST framework IsAuthenticated is a permission class will deny permission to any unauthenticated user, and allow permission otherwise. 
 export const isAuthenticated = () => {
     if(typeof window == undefined) {
-        return false
+        return false;
     }
 
     //here we are comparing if the authentication is equal to the existing in the backend and then returning if it is true or false.
     if(localStorage.getItem("jwt")){
-        return JSON.parse(localStorage.getItem("jwt"))
+        return JSON.parse(localStorage.getItem("jwt"));
     } else {
         return false;
     }
 };
 
 
-//create a signout method
+//create a signout method and save the authenticated user ID in the variable userId
 export const signout = (next) => {
-    const userId = isAuthenticated() && isAuthenticated().user.id
+    const userId = isAuthenticated() && isAuthenticated().user.id;
 
     if(typeof window !== undefined) {
         localStorage.removeItem("jwt")
